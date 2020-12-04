@@ -12,12 +12,12 @@ namespace Core.AuditTrail.Implementation.CommandHandlers
 {
     public class LogActionCommandHandler : IRequestHandler<LogActionCommand, Database.Tables.AuditTrail>
     {
-        private IBeawreContext _beawreContext;
+        private IDatabaseContext _databaseContext;
         private IMapper _mapper;
 
-        public LogActionCommandHandler(IBeawreContext beawreContext, IMapper mapper)
+        public LogActionCommandHandler(IDatabaseContext databaseContext, IMapper mapper)
         {
-            _beawreContext = beawreContext;
+            _databaseContext = databaseContext;
             _mapper = mapper;
         }
 
@@ -25,8 +25,8 @@ namespace Core.AuditTrail.Implementation.CommandHandlers
         {
             var entry = _mapper.Map<Database.Tables.AuditTrail>(request);
 
-            _beawreContext.AuditTrial.Add(entry);
-            _beawreContext.SaveChanges();
+            _databaseContext.AuditTrial.Add(entry);
+            _databaseContext.SaveChanges();
 
             return Task.FromResult(entry);
         }

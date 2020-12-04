@@ -17,13 +17,13 @@ namespace Core.AuditTrail.Implementation.Services
     {
         private IMediator _mediator;
         private IMapper _mapper;
-        private IBeawreContext _beawreContext;
+        private IDatabaseContext _databaseContext;
 
-        public AuditTrailService(IMediator mediator, IMapper mapper, IBeawreContext beawreContext)
+        public AuditTrailService(IMediator mediator, IMapper mapper, IDatabaseContext databaseContext)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _beawreContext = beawreContext;
+            _databaseContext = databaseContext;
         }
 
         public async Task<AuditTrailModel> LogAction(LogActionCommand command) => _mapper.Map<AuditTrailModel>(await _mediator.Send(command));
