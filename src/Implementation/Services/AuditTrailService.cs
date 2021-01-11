@@ -1,4 +1,15 @@
-﻿using System;
+﻿// /********************************************************************************
+//  * Copyright (c) 2020,2021 Beawre Digital SL
+//  *
+//  * This program and the accompanying materials are made available under the
+//  * terms of the Eclipse Public License 2.0 which is available at
+//  * http://www.eclipse.org/legal/epl-2.0.
+//  *
+//  * SPDX-License-Identifier: EPL-2.0 3
+//  *
+//  ********************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +26,9 @@ namespace Core.AuditTrail.Implementation.Services
 {
     public class AuditTrailService : IAuditTrailService
     {
-        private IMediator _mediator;
-        private IMapper _mapper;
         private IDatabaseContext _databaseContext;
+        private IMapper _mapper;
+        private IMediator _mediator;
 
         public AuditTrailService(IMediator mediator, IMapper mapper, IDatabaseContext databaseContext)
         {
@@ -28,7 +39,7 @@ namespace Core.AuditTrail.Implementation.Services
 
         public async Task<AuditTrailModel> LogAction(LogActionCommand command) => _mapper.Map<AuditTrailModel>(await _mediator.Send(command));
 
-        public AuditTrailModel LogAction(AuditTrailAction action, Guid? objectId, AuditTrailPayloadModel payload = null) => _mapper.Map<AuditTrailModel>(_mediator.Send(new LogActionCommand() { Action = action, ObjectId = objectId, Payload = payload }).Result);
-
+        public AuditTrailModel LogAction(AuditTrailAction action, Guid? objectId, AuditTrailPayloadModel payload = null) =>
+            _mapper.Map<AuditTrailModel>(_mediator.Send(new LogActionCommand() {Action = action, ObjectId = objectId, Payload = payload}).Result);
     }
 }
